@@ -59,6 +59,7 @@ const Home: React.FC<HomeProps> = ({
                     <CityIndexCard
                         key={city.id}
                         city={city}
+                        units={units}
                         trackedCities={trackedCities}
                         setTrackedCities={setTrackedCities}
                     />

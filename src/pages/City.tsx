@@ -21,7 +21,6 @@ const City: React.FC<CityProps> = ({
         forecasts.forEach((forecast:any) => {
             const date = new Date(forecast.dt * 1000);
             const day = date.toLocaleDateString(undefined, { weekday: 'long' });
-    
             if (!dailyData[day]) {
                 dailyData[day] = {
                     high: -Infinity,
@@ -31,7 +30,6 @@ const City: React.FC<CityProps> = ({
                     rawForecasts: []
                 };
             }
-    
             dailyData[day].high = Math.max(dailyData[day].high, forecast.main.temp_max);
             dailyData[day].low = Math.min(dailyData[day].low, forecast.main.temp_min);
             dailyData[day].rawForecasts.push(forecast);
@@ -39,8 +37,6 @@ const City: React.FC<CityProps> = ({
     
         return Object.values(dailyData).slice(0, 5);
     };
-
-
 
     useEffect(() => {
         const loadForecast = async () => {
@@ -54,10 +50,6 @@ const City: React.FC<CityProps> = ({
 
         loadForecast();
     }, [city, units]);
-
-    // if (!forecastDays) {
-    //     return <div>Loading...</div>; // Loading state
-    // }
 
     return (
         <div className="w-[90%] max-w-[1200px] mx-auto py-[80px] text-white">

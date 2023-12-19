@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 interface CityIndexCardProps {
     city: any;
+    units: any;
     trackedCities: any[];
     setTrackedCities: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
-const CityIndexCard: React.FC<CityIndexCardProps> = ({ city, trackedCities, setTrackedCities }) => {
+const CityIndexCard: React.FC<CityIndexCardProps> = ({ city, units, trackedCities, setTrackedCities }) => {
     const navigate = useNavigate();
 
     const removeFromTracked = () => {
@@ -35,7 +36,7 @@ const CityIndexCard: React.FC<CityIndexCardProps> = ({ city, trackedCities, setT
             </div>
             <div className="flex items-start justify-between">
                 <div className="flex items-center gap-6">
-                    <span className="text-3xl font-bold">{Math.round(city.weather.main.temp)}°</span>
+                    <span className="text-3xl font-bold">{Math.round(city.weather.main.temp)}°{units.display.charAt(0)}</span>
                     <div className="flex flex-col">
                         <span className="text-sm">Feels like {Math.round(city.weather.main.feels_like)}°</span>
                         <span className="text-sm">{city.weather.weather[0].description}</span>
