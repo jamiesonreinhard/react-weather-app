@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, Link } from 'react-router-dom';
 import { fetchForecastData } from "../services/weatherService";
 import ForecastCard from "../components/cards/ForecastCard";
+import Loading from "../components/utility/Loading";
 
 interface CityProps {
     units: any;
@@ -54,17 +55,18 @@ const City: React.FC<CityProps> = ({
         loadForecast();
     }, [city, units]);
 
-    if (!forecastDays) {
-        return <div>Loading...</div>; // Loading state
-    }
+    // if (!forecastDays) {
+    //     return <div>Loading...</div>; // Loading state
+    // }
 
     return (
         <div className="w-[90%] max-w-[1200px] mx-auto py-[80px] text-white">
             <div className="flex flex-col w-full">
                 <Link to="/" className="mb-12 mr-auto py-2 px-4 bg-primary rounded">Back to all cities</Link>
                 <h1 className="text-4xl font-bold mb-12">{`${city?.name}, ${city?.state || city?.country}`} <span className="text-secondary">(5 day forecast)</span></h1>
+                {!forecastDays && <Loading />}
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                    {forecastDays.map((dayForecast, index) => (
+                    {forecastDays?.map((dayForecast, index) => (
                         <ForecastCard
                             key={index}
                             dayForecast={dayForecast}
