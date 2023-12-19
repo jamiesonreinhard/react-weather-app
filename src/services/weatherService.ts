@@ -2,7 +2,7 @@ import axios from 'axios';
 import { log } from 'console';
 
 const API_KEY = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
-const BASE_URL = 'http://api.openweathermap.org';
+const BASE_URL = 'https://api.openweathermap.org';
 
 // Define types for your data
 
