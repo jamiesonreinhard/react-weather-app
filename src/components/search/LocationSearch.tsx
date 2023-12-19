@@ -8,9 +8,10 @@ import ResultItem from './ResultItem';
 interface LocationSearchProps {
     trackedCities: any[];
     setTrackedCities: React.Dispatch<React.SetStateAction<any[]>>;
+    units: any;
 }
 
-const LocationSearch: React.FC<LocationSearchProps> = ({ trackedCities, setTrackedCities }) => {
+const LocationSearch: React.FC<LocationSearchProps> = ({ trackedCities, setTrackedCities, units }) => {
     const [searchTerm, setSearchTerm] = React.useState<string>("");
     const [loadingResults, setLoadingResults] = React.useState<boolean>(false);
     const [searchResults, setSearchResults] = React.useState<any>([]);
@@ -31,8 +32,8 @@ const LocationSearch: React.FC<LocationSearchProps> = ({ trackedCities, setTrack
     };
 
     return (
-        <div className="flex items-center gap-2 relative z-[10]">
-            <form onSubmit={handleSearch} className='flex items-center gap-2 relative'>
+        <div className="flex items-center gap-2 relative z-[10] w-full sm:w-fit">
+            <form onSubmit={handleSearch} className='flex items-center gap-2 relative w-full'>
                 <div className="w-full relative">
                     <input
                         type="text"
@@ -78,6 +79,7 @@ const LocationSearch: React.FC<LocationSearchProps> = ({ trackedCities, setTrack
                                         trackedCities={trackedCities}
                                         setTrackedCities={setTrackedCities}
                                         setShowResults={setShowResults}
+                                        units={units}
                                     />
                                 ))}
                             </div>

@@ -3,7 +3,13 @@ import LocationSearch from "../components/search/LocationSearch";
 import CityIndexCard from "../components/cards/CityIndexCard";
 import { fetchWeatherByCity } from "../services/weatherService";
 
-const Home = () => {
+interface HomeProps {
+    units: any;
+}
+
+const Home: React.FC<HomeProps> = ({
+    units
+}) => {
     const [trackedCities, setTrackedCities] = useState<any[]>(() => {
         const cities = localStorage.getItem("trackedCities");
         if (cities) {
@@ -13,13 +19,22 @@ const Home = () => {
     });
 
     const updateWeatherForAllCities = async () => {
-        const updatedCities:any = await Promise.all(trackedCities.map(async city => {
-          const weatherData = await fetchWeatherByCity(city.lat, city.lon);
-          return { ...city, weatherData };
-        }));
-        
-        setTrackedCities(updatedCities);
-      };
+        try {
+            const updatedCities = await Promise.all(trackedCities.map(async city => {
+                try {
+                    const weatherData = await fetchWeatherByCity(city.lat, city.lon, units.value);
+                    return { ...city, weather: weatherData };
+                } catch (error) {
+                    console.error('Error fetching weather for city:', city.name, error);
+                    return city;
+                }
+            }));
+            setTrackedCities(updatedCities);
+        } catch (error) {
+            console.error('Error updating weather for all cities:', error);
+        }
+    };
+
 
     useEffect(() => {
         localStorage.setItem('trackedCities', JSON.stringify(trackedCities));
@@ -27,13 +42,17 @@ const Home = () => {
 
     useEffect(() => {
         updateWeatherForAllCities();
-    }, []);
+    }, [units]);
 
     return (
         <div className="w-[90%] max-w-[1200px] mx-auto py-[80px] text-white">
-            <div className="flex items-center w-full justify-between mb-12">
+            <div className="flex flex-col sm:flex-row sm:items-center w-full justify-between mb-12 gap-4">
                 <h1 className="text-4xl font-bold">My Cities</h1>
-                <LocationSearch trackedCities={trackedCities} setTrackedCities={setTrackedCities} />
+                <LocationSearch
+                    trackedCities={trackedCities}
+                    setTrackedCities={setTrackedCities}
+                    units={units}
+                />
             </div>
             <div className="flex items-start gap-4 flex-wrap">
                 {trackedCities.map((city: any) => (
@@ -45,6 +64,9 @@ const Home = () => {
                     />
                 ))}
             </div>
+            {trackedCities.length === 0 && (
+                <div className="text-center text-2xl mt-12">No cities added yet!</div>
+            )}
         </div>
     );
 }

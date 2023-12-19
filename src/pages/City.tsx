@@ -3,7 +3,13 @@ import { useLocation, Link } from 'react-router-dom';
 import { fetchForecastData } from "../services/weatherService";
 import ForecastCard from "../components/cards/ForecastCard";
 
-const City = () => {
+interface CityProps {
+    units: any;
+}
+
+const City: React.FC<CityProps> = ({
+    units
+}) => {
     const location = useLocation();
     const city = location.state?.city;
     const [forecastDays, setForecastDays] = useState<any[] | null>(null);
@@ -40,13 +46,13 @@ const City = () => {
             if (city.id) {
                 const lat = city.id.split(",")[0];
                 const lon = city.id.split(",")[1];
-                const data = await fetchForecastData(parseInt(lat), parseInt(lon));
+                const data = await fetchForecastData(parseInt(lat), parseInt(lon), units.value);
                 setForecastDays(processForecastData(data?.list || []));
             }
         };
 
         loadForecast();
-    }, [city]);
+    }, [city, units]);
 
     if (!forecastDays) {
         return <div>Loading...</div>; // Loading state

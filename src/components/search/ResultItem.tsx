@@ -14,9 +14,16 @@ interface ResultItemProps {
     trackedCities: any[];
     setTrackedCities: React.Dispatch<React.SetStateAction<any[]>>;
     setShowResults: React.Dispatch<React.SetStateAction<boolean>>;
+    units: any;
 }
 
-const ResultItem: React.FC<ResultItemProps> = ({ city, trackedCities, setTrackedCities, setShowResults }) => {
+const ResultItem: React.FC<ResultItemProps> = ({
+    city,
+    trackedCities,
+    setTrackedCities,
+    setShowResults,
+    units
+}) => {
     const [hovered, setHovered] = useState(false);
 
     const addCityToTracked = async () => {
@@ -25,7 +32,7 @@ const ResultItem: React.FC<ResultItemProps> = ({ city, trackedCities, setTracked
         if(trackedCities.some((trackedCity) => (trackedCity.id === cityId))) {
             return;
         }
-        const weather = await fetchWeatherByCity(city.lat, city.lon);
+        const weather = await fetchWeatherByCity(city.lat, city.lon, units.value);
         const cityWithId = { ...city, id: cityId, weather: weather };
         setTrackedCities((prev) => [...prev, cityWithId]);
     };
