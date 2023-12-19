@@ -65,7 +65,11 @@ const City: React.FC<CityProps> = ({
                 <h1 className="text-4xl font-bold mb-12">{`${city?.name}, ${city?.state || city?.country}`} <span className="text-secondary">(5 day forecast)</span></h1>
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
                     {forecastDays.map((dayForecast, index) => (
-                        <ForecastCard key={index} dayForecast={dayForecast} />
+                        <ForecastCard
+                            key={index}
+                            dayForecast={dayForecast}
+                            units={units}
+                        />
                     ))}
                 </div>
             </div>

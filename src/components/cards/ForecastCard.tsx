@@ -9,6 +9,7 @@ interface ForecastCardProps {
         overcast: string;
         rawForecasts: any[];
     };
+    units: any;
 }
 
 interface DataPoint {
@@ -16,7 +17,7 @@ interface DataPoint {
     temp: number;
 }
 
-const ForecastCard: React.FC<ForecastCardProps> = ({ dayForecast }) => {
+const ForecastCard: React.FC<ForecastCardProps> = ({ dayForecast, units }) => {
     const { date, high, low, overcast, rawForecasts } = dayForecast;
     const svgRef = useRef(null);
     const day = date.toLocaleDateString(undefined, { weekday: 'long' });
@@ -89,8 +90,8 @@ const ForecastCard: React.FC<ForecastCardProps> = ({ dayForecast }) => {
             <div className="flex md:flex-col">
                 <div className="flex flex-col">
                     <h3 className="font-bold">{day}</h3>
-                    <p>High: {Math.round(high)}°F</p>
-                    <p>Low: {Math.round(low)}°F</p>
+                    <p>High: {Math.round(high)}°{units.display.charAt(0)}</p>
+                    <p>Low: {Math.round(low)}°{units.display.charAt(0)}</p>
                     <p>Overcast: {overcast}</p>
                 </div>
                 <svg ref={svgRef} width={200} height={140}></svg>

@@ -65,7 +65,7 @@ const Home: React.FC<HomeProps> = ({
                 ))}
             </div>
             {trackedCities.length === 0 && (
-                <div className="text-center text-2xl mt-12">No cities added yet!</div>
+                <div className="text-2xl mr-auto text-gray-500">No cities added yet!</div>
             )}
         </div>
     );
