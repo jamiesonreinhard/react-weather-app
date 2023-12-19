@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Jamieson Project Notes
+
+I really enjoyed working on this project! Thanks for the opportunity to try it out. I'm excited about the performance and UI of my application.
+
+The app should satisfy all of the requirements as well as the bonus items.
+
 ## Available Scripts
 
 In the project directory, you can run:
